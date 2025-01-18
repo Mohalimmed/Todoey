@@ -45,7 +45,7 @@ class TasksScreen extends StatelessWidget {
           ),
           Expanded(
             child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 16.0,vertical: 15),
+              padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 15),
               decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.only(
@@ -58,13 +58,22 @@ class TasksScreen extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          showModalBottomSheet(context: context, builder: (context) => AddTasksModal(),);
+          showModalBottomSheet(
+            context: context,
+            builder: (context) =>
+                SingleChildScrollView(child: Container(
+                    padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+                    child: AddTasksModal())),
+            isScrollControlled: true,
+          );
         },
         backgroundColor: Colors.lightBlueAccent,
         shape: CircleBorder(),
-        child: Icon(Icons.add,color: Colors.white,),
+        child: Icon(
+          Icons.add,
+          color: Colors.white,
+        ),
       ),
     );
   }
 }
-
