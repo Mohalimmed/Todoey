@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:todoey/models/task-models.dart';
 import 'package:todoey/screens/add_tasks_modal.dart';
 import 'package:todoey/widgets/task_list.dart';
 
-class TasksScreen extends StatelessWidget {
+class TasksScreen extends StatefulWidget {
   const TasksScreen({super.key});
 
+  @override
+  State<TasksScreen> createState() => _TasksScreenState();
+}
+
+class _TasksScreenState extends State<TasksScreen> {
+  List<TaskModels> tasks = [];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,7 +44,7 @@ class TasksScreen extends StatelessWidget {
                       fontWeight: FontWeight.w700),
                 ),
                 Text(
-                  '12 Tasks',
+                  '${tasks.length} Tasks',
                   style: TextStyle(color: Colors.white, fontSize: 18),
                 )
               ],
@@ -51,7 +58,9 @@ class TasksScreen extends StatelessWidget {
                   borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(20),
                       topRight: Radius.circular(20))),
-              child: TasksItems(),
+              child: TasksItems(
+                tasks: tasks,
+              ),
             ),
           )
         ],
@@ -64,7 +73,14 @@ class TasksScreen extends StatelessWidget {
               child: Container(
                 padding: EdgeInsets.only(
                     bottom: MediaQuery.of(context).viewInsets.bottom),
-                child: AddTasksModal(),
+                child: AddTasksModal(
+                  adding: (newText) {
+                   setState(() {
+                     tasks.add(TaskModels(name: newText));
+                   });
+                   Navigator.pop(context);
+                  },
+                ),
               ),
             ),
             isScrollControlled: true,

@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 
 class AddTasksModal extends StatelessWidget {
-  const AddTasksModal({super.key});
+  const AddTasksModal({super.key, required this.adding});
+final Function(String) adding;
+
 
   @override
   Widget build(BuildContext context) {
+
+    TextEditingController textController = TextEditingController();
     return Container(
       color: Color(0xff757575),
       child: Container(
@@ -50,9 +54,12 @@ class AddTasksModal extends StatelessWidget {
                 fillColor: Colors.white, // Change this to your desired background color
                 filled: true, // Set to true to enable background color
               ),
+              controller: textController,
             ),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: (){
+                      adding(textController.text);
+              },
               style: ElevatedButton.styleFrom(
                 foregroundColor: Colors.white,
                 backgroundColor: Colors.lightBlueAccent,
