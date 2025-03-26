@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:todoey/models/task-data.dart';
 
 class AddTasksModal extends StatelessWidget {
-  const AddTasksModal({super.key, required this.adding});
-final Function(String) adding;
+  const AddTasksModal({super.key});
+
 
 
   @override
@@ -58,7 +60,8 @@ final Function(String) adding;
             ),
             ElevatedButton(
               onPressed: (){
-                      adding(textController.text);
+                      Provider.of<TaskData>(context,listen: false).addingTasks(textController.text);
+                      Navigator.pop(context);
               },
               style: ElevatedButton.styleFrom(
                 foregroundColor: Colors.white,

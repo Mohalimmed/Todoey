@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:todoey/models/task-data.dart';
 import 'package:todoey/models/task-models.dart';
 import 'package:todoey/screens/add_tasks_modal.dart';
 import 'package:todoey/widgets/task_list.dart';
@@ -11,7 +13,7 @@ class TasksScreen extends StatefulWidget {
 }
 
 class _TasksScreenState extends State<TasksScreen> {
-  List<TaskModels> tasks = [];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,7 +46,7 @@ class _TasksScreenState extends State<TasksScreen> {
                       fontWeight: FontWeight.w700),
                 ),
                 Text(
-                  '${tasks.length} Tasks',
+                  '${Provider.of<TaskData>(context).taskCount} Tasks',
                   style: TextStyle(color: Colors.white, fontSize: 18),
                 )
               ],
@@ -58,9 +60,7 @@ class _TasksScreenState extends State<TasksScreen> {
                   borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(20),
                       topRight: Radius.circular(20))),
-              child: TasksItems(
-                tasks: tasks,
-              ),
+              child: TasksItems(),
             ),
           )
         ],
@@ -73,14 +73,7 @@ class _TasksScreenState extends State<TasksScreen> {
               child: Container(
                 padding: EdgeInsets.only(
                     bottom: MediaQuery.of(context).viewInsets.bottom),
-                child: AddTasksModal(
-                  adding: (newText) {
-                   setState(() {
-                     tasks.add(TaskModels(name: newText));
-                   });
-                   Navigator.pop(context);
-                  },
-                ),
+                child: AddTasksModal(),
               ),
             ),
             isScrollControlled: true,
